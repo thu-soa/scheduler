@@ -33,7 +33,7 @@ require './errors'
 #
 # authorization_endpoint.call request.env
 
-post '/api/users/verify' do
+get '/api/v1/users/user_id' do
 
 end
 

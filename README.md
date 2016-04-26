@@ -18,6 +18,7 @@
             - status:   状态, 取值见下面status部分的说明
             - reason:   如果失败, 则是一个可读的字符串, 显示失败的原因
             - messages: 由于文档中写了Message[], 所以对应此字段名为messages, 类型是Message数组
+            - 如果是POST请求, 用data: xxx表示POST的数据
     - status的取值
         - ok: 成功
         - not_found: uri错误
@@ -40,12 +41,24 @@
             - String url
 
 ### For clients' polling
-- GET /api/v1/unread_messages
-    - SimpleMessage[]
-- GET /api/v1/sources/:source_name/unread_messages
-    - SimpleMessage[]
+- GET /api/v1/unread_messages   token
+    - SimpleMessage[] simple_messages
+    - 获取所有未读的消息列表
+- GET /api/v1/sources/:source_name/unread_messages  token
+    - SimpleMessage[] simple_messages
+    - 获取某个数据源的所有未读消息列表
 
 ### For message pushing
-- POST /api/v1/unread_messages
-    - SimpleMessage
-    - user_id
+- POST /api/v1/unread_messages?user_id=1    token
+    - data: SimpleMessage 
+    - 添加消息
+    
+### Authorization Server(是和Scheduler独立的服务, 但是他们即使部署在同一个端口, URI也不会冲突)
+
+- GET /api/v1/user_info token
+    - String user_id
+    - String username
+
+- POST /api/v1/login?username=&password=
+    - String user_id
+    - String token
