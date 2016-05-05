@@ -51,6 +51,7 @@
 ### For message pushing
 - POST /api/v1/unread_messages?user_id=1    token
     - data: SimpleMessage 
+    - return: message_id: 1
     - 添加消息
     
 ### Authorization Server(是和Scheduler独立的服务, 但是他们即使部署在同一个端口, URI也不会冲突)
