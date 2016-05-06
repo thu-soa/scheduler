@@ -65,3 +65,36 @@
 - POST /api/v1/login?username=&password=
     - String user_id
     - String token
+    
+### cURL例子
+- 登陆
+
+        $ curl "http://auth.soa.a1ex.wang/api/v1/login" -d "username=learn&password=123"
+        => {"status":"ok","user_id":1,"token":"d019b242f7d73fa5954a6596c0ace90a8589f2799a1f1891"}⏎
+        
+- 推送消息
+
+        $ curl "http://scheduler.soa.a1ex.wang/api/v1/unread_messages" -d 'token=d019b242f7d73fa5954a6596c0ace90a8589f2799a1f1891&json={"simple_message": {"title": "hello", "user_id":2,"source":"learn","url":"http://www.baidu.com" }}'
+        => {"message_id":11,"status":"ok"}⏎ 
+
+- 获取消息
+
+        $ curl "http://scheduler.soa.a1ex.wang/api/v1/unread_messages?token=1a250ec0aa9978eae119546c6d5c5e2a16c3fcd330642a97"
+        
+        =>
+        {
+            "status":"ok",
+            "simple_messages":[
+                {
+                    "id":11,
+                    "title":"hello",
+                    "user_id":"2",
+                    "url":"http://www.baidu.com",
+                    "source":"learn",
+                    "description":null,
+                    "msg_type":null,
+                    "created_at":"2016-05-06T05:40:53.342Z",
+                    "updated_at":"2016-05-06T05:40:53.342Z"
+                }
+            ]
+        }
