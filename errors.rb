@@ -22,5 +22,10 @@ error MyError do
   { status: :failed, reason: e.message }.to_json
 end
 error do
+  e = env['sinatra.error']
   { status: :failed, reason: 'format error', e: e }.to_json
+end
+not_found do
+  status 404
+  { status: :not_found }.to_json
 end
