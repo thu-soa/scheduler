@@ -10,6 +10,16 @@ get '/api/v1/unread_messages' do
     er 'token error'
   end
 end
+get '/api/v1/sources/:source_name/unread_messages' do
+  if (token = Token.find_by_token_string(params['token']))
+    messages = Message.where(
+        'user_id = :user_id and source = :source',
+        user_id: token.user.id, source: params[:source_name])
+    { status: :ok, simple_messages: messages }.to_json
+  else
+    er 'token error'
+  end
+end
 
 post '/api/v1/unread_messages', &(lambda do
   er 'json http param not found' unless params.key? 'json'
