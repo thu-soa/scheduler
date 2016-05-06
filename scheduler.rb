@@ -28,7 +28,7 @@ post '/api/v1/unread_messages', &(lambda do
   message = json['simple_message']
 
   if (token = params['token']) && (t = Token.find_by_token_string(token))
-    er 'user type not matched' unless t.user.user_type == :source
+    er 'user type not matched' unless t.user.user_type.to_sym == :source
     er 'no token' unless token
 
     # check allowed properties
@@ -43,5 +43,7 @@ post '/api/v1/unread_messages', &(lambda do
     else
       er 'db error'
     end
+  else
+    er 'token error'
   end
 end)
