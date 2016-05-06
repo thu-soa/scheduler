@@ -4,6 +4,7 @@ class AddMessages < ActiveRecord::Migration
       t.string  :title
       t.string  :user_id
       t.string  :url
+      t.string  :source
       t.text    :description
       t.string  :msg_type
       t.string  :source

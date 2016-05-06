@@ -33,13 +33,36 @@ require './errors'
 #
 # authorization_endpoint.call request.env
 
-get '/api/v1/users/user_id' do
-
+get '/api/v1/user_info' do
+  token = params['token']
+  if token && (t = Token.find_by_token_string(token))
+    {
+        status:   :ok,
+        user_id:  t.user.id,
+        username: t.user.name,
+        user_type:t.user.user_type
+    }.to_json
+  else
+    er 'no token'
+  end
 end
 
-get '/api/users/token' do
-  uid = params['id']
-  source = params['source']
-  { status: :ok }
+post '/api/v1/login' do
+  username = params['username']
+  password = params['password']
+  if username && password
+    if (user = User.find_by_name(username))
+      {
+          status:   :ok,
+          user_id:  user.id,
+          token:    user.create_token.token_string
+      }.to_json
+    else
+      er 'user not found'
+    end
+  else
+    er 'parameters error'
+  end
+
 end
 

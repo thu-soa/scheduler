@@ -3,18 +3,26 @@ require './main'
 require './errors'
 
 get '/api/v1/unread_messages' do
-  Message.all.to_json
+  if (token = Token.find_by_token_string(params['token']))
+    messages = Message.where(user_id: token.user.id)
+    { status: :ok, simple_messages: messages }.to_json
+  else
+    er 'token error'
+  end
 end
 
 post '/api/v1/unread_messages', &(lambda do
   er 'json http param not found' unless params.key? 'json'
   json = JSON.parse params['json']
-  er 'message not found' unless json['message']&.is_a?(Hash)
-  message = json['message']
-  token = json['token']
-  if token
+  er 'simple_message not found' unless json['simple_message']&.is_a?(Hash)
+  message = json['simple_message']
+
+  if (token = params['token']) && (t = Token.find_by_token_string(token))
+    er 'user type not matched' unless t.user.user_type == :source
+    er 'no token' unless token
+
     # check allowed properties
-    properties = %w'title user_id'
+    properties = %w'title user_id source url'
     # reject all invalid parameters
     message.reject! { |key, val| not properties.include? key }
     # check all required parameters
@@ -25,7 +33,5 @@ post '/api/v1/unread_messages', &(lambda do
     else
       er 'db error'
     end
-  else
-    er 'no token'
   end
 end)

@@ -11,17 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414111632) do
+ActiveRecord::Schema.define(version: 20160506003104) do
 
   create_table "messages", force: :cascade do |t|
     t.string   "title"
     t.string   "user_id"
     t.string   "url"
+    t.string   "source"
     t.text     "description"
     t.string   "msg_type"
-    t.string   "source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "oauth_tokens", force: :cascade do |t|
+    t.string   "token_string"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.datetime "valid_until"
+    t.integer  "user_id"
+  end
+
+  create_table "tokens", force: :cascade do |t|
+    t.string  "token_string"
+    t.integer "user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
