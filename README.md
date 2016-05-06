@@ -27,7 +27,8 @@
         - unknown_error: 服务器崩溃了
     - 各种类型的定义
         - Message
-            - String id
+            - Integer id
+            - Integer user_id
             - String title
             - String source
             - String uri
@@ -35,7 +36,8 @@
             - String content
             - ... ?
         - SimpleMessage
-            - String id
+            - Integer id
+            - Integer user_id
             - String title
             - String source
             - String url
