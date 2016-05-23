@@ -27,12 +27,26 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (6.0.3)
     attr_required (1.0.1)
     builder (3.2.2)
+    concurrent-ruby (1.0.1)
+    connection_pool (2.2.0)
+    domain_name (0.5.20160310)
+      unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     foreigner (1.7.4)
       activerecord (>= 3.0.0)
+    http (2.0.1)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    http-form_data (1.0.1)
+    http_parser.rb (0.6.0)
     httpclient (2.7.1)
     i18n (0.7.0)
     json (1.8.3)
@@ -68,6 +82,13 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.5.0)
+    redis (3.3.0)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
+    sidekiq (4.1.2)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      redis (~> 3.2, >= 3.2.1)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -82,6 +103,9 @@ GEM
     tilt (2.0.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
 
 PLATFORMS
   ruby
@@ -89,7 +113,11 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   foreigner
+  http
   rack-oauth2
+  redis
+  redis-namespace
+  sidekiq
   sinatra
   sqlite3
   standalone_migrations

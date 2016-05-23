@@ -1,48 +1,81 @@
 require 'sinatra'
+require 'http'
 require './main'
 require './errors'
+AUTH_URL_PART_1 = 'http://localhost:8002'
+AUTH_URL = AUTH_URL_PART_1 + '/api/v1/login'
+USER_INFO_URL = AUTH_URL_PART_1 + '/api/v1/user_info'
+
+def get_user_by_token(token)
+  response = HTTP.get(URI("#{USER_INFO_URL}?token=#{token}"))
+  begin
+    json = JSON.parse(response)
+    if json['status'] == 'ok'
+      json
+    else
+      nil
+    end
+  rescue JSON::JSONError
+    raise 'auth returns garbage'
+  end
+end
 
 get '/api/v1/unread_messages' do
-  if (token = Token.find_by_token_string(params['token']))
-    messages = Message.where(user_id: token.user.id)
+  user = get_user_by_token(params['token'])
+  if user
+    user_id = user['id']
+    messages = Message.where(user_id: user_id)
     { status: :ok, simple_messages: messages }.to_json
   else
     er 'token error'
   end
 end
 get '/api/v1/sources/:source_name/unread_messages' do
-  if (token = Token.find_by_token_string(params['token']))
+  user = get_user_by_token(params['token'])
+  if user
+    user_id = user['id']
     messages = Message.where(
         'user_id = :user_id and source = :source',
-        user_id: token.user.id, source: params[:source_name])
+        user_id: user_id, source: params[:source_name])
     { status: :ok, simple_messages: messages }.to_json
   else
     er 'token error'
   end
 end
 
+def add_message(message)
+  # check allowed properties
+  properties = %w'title user_id source url'
+  # reject all invalid parameters
+  message.reject! { |key, val| not properties.include? key }
+  # check all required parameters
+  properties.each { |x| er "missing property `#{x}'" unless message.key? x }
+
+  if (m = Message.create message)
+    { message_id: m.id, status: :ok }.to_json
+  else
+    er 'db error'
+  end
+end
+
 post '/api/v1/unread_messages', &(lambda do
   er 'json http param not found' unless params.key? 'json'
   json = JSON.parse params['json']
-  er 'simple_message not found' unless json['simple_message']&.is_a?(Hash)
+  er 'simple_message not found' unless [Hash, Array].include?(json['simple_message'].class)
   message = json['simple_message']
 
-  if (token = params['token']) && (t = Token.find_by_token_string(token))
-    er 'user type not matched' unless t.user.user_type.to_sym == :source
+  user = get_user_by_token(params['token'])
+  if (token = params['token']) && (user)
+    user_type = user['user_type']
+    er 'user type not matched' unless user_type == 'source'
     er 'no token' unless token
 
-    # check allowed properties
-    properties = %w'title user_id source url'
-    # reject all invalid parameters
-    message.reject! { |key, val| not properties.include? key }
-    # check all required parameters
-    properties.each { |x| er "missing property `#{x}'" unless message.key? x }
-
-    if (m = Message.create message)
-      { message_id: m.id, status: :ok }.to_json
-    else
-      er 'db error'
+    if message.is_a?(Array)
+      message.each { |m| add_message(m) }
+    else # message.is_a?(Hash)
+      add_message(message)
     end
+    { status: 'ok' }.to_json
   else
     er 'token error'
   end

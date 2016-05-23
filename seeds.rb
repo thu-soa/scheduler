@@ -1,8 +1,5 @@
 require './main'
 
-User.create(name: 'learn', user_type: :source)
-User.create(name: 'alexwang', user_type: :user)
-
 10.times do |x|
   Message.create(
       title:   "Awesome Message ##{x}",

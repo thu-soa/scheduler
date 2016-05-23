@@ -1,3 +1,0 @@
-#!/usr/bin/env ruby
-`nohup ruby scheduler.rb -p 8001 > scheduler.log &`
-`nohup ruby auth.rb -p 8002 > auth.log &`
