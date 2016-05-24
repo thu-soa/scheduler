@@ -2,9 +2,10 @@ require 'sinatra'
 require 'http'
 require './main'
 require './errors'
-AUTH_URL_PART_1 = 'http://localhost:8002'
-AUTH_URL = AUTH_URL_PART_1 + '/api/v1/login'
-USER_INFO_URL = AUTH_URL_PART_1 + '/api/v1/user_info'
+
+after do
+  ActiveRecord::Base.connection.close
+end
 
 def get_user_by_token(token)
   response = HTTP.get(URI("#{USER_INFO_URL}?token=#{token}"))
@@ -30,6 +31,7 @@ get '/api/v1/unread_messages' do
     er 'token error'
   end
 end
+
 get '/api/v1/sources/:source_name/unread_messages' do
   user = get_user_by_token(params['token'])
   if user
