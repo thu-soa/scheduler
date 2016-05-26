@@ -7,6 +7,7 @@ after do
   ActiveRecord::Base.connection.close
 end
 
+# TODO Here we can use a cache to reduce requests
 def get_user_by_token(token)
   response = HTTP.get(URI("#{USER_INFO_URL}?token=#{token}"))
   begin

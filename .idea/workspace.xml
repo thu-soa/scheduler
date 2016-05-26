@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3626313-412c-4982-bbce-5c2676d782aa" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/runConfigurations/github_worker.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config.yml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/README.md" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/errors.rb" afterPath="$PROJECT_DIR$/errors.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.rb" afterPath="$PROJECT_DIR$/main.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scheduler.rb" afterPath="$PROJECT_DIR$/scheduler.rb" />
     </list>
     <ignored path="sinatra.iws" />
@@ -44,21 +37,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="scheduler.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="scheduler.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scheduler.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
+            <state relative-caret-position="284">
+              <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="config.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+              <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -97,8 +90,8 @@
         <option value="$PROJECT_DIR$/main.rb" />
         <option value="$PROJECT_DIR$/config.yml" />
         <option value="$PROJECT_DIR$/config.rb" />
-        <option value="$PROJECT_DIR$/scheduler.rb" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/scheduler.rb" />
       </list>
     </option>
   </component>
@@ -375,12 +368,12 @@
       <workItem from="1463721280753" duration="17000" />
       <workItem from="1463731015385" duration="18000" />
       <workItem from="1464003168945" duration="9142000" />
-      <workItem from="1464055742915" duration="1449000" />
+      <workItem from="1464055742915" duration="1561000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37551000" />
+    <option name="totallyTimeSpent" value="37663000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="99" y="45" width="2637" height="1779" extended-state="6" />
@@ -654,14 +647,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scheduler.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2380">
@@ -676,7 +661,15 @@
     <entry file="file://$PROJECT_DIR$/config.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+          <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scheduler.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
           <folding />
         </state>
       </provider>
