@@ -2,6 +2,10 @@ require 'sinatra'
 require 'http'
 require './main'
 require './errors'
+require 'sinatra/cross_origin'
+configure do
+  enable :cross_origin
+end
 
 after do
   ActiveRecord::Base.connection.close
