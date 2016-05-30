@@ -2,6 +2,7 @@ require 'sinatra'
 require 'http'
 require './main'
 require './errors'
+require 'net/http'
 require 'sinatra/cross_origin'
 configure do
   enable :cross_origin
@@ -88,3 +89,23 @@ post '/api/v1/unread_messages', &(lambda do
     er 'token error'
   end
 end)
+
+get '/api/v1/all_sources' do
+  user = get_user_by_token(params['token'])
+  if user
+    user_id = user['user_id']
+    sites = []
+    # each adapter, check registered
+    ADAPTER_URLS.each do |site, url_main|
+      u = url_main + "/api/v1/check_registered?id=#{user_id}&token=#{params['token']}"
+      response = Net::HTTP.get(URI(u))
+      json  = JSON.parse(response)
+      if json['status'] == 'ok'
+        sites << site
+      end
+    end
+    { status: :ok, sites: sites }.to_json
+  else
+    er 'token error'
+  end
+end
