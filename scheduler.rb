@@ -29,7 +29,7 @@ end
 get '/api/v1/unread_messages' do
   user = get_user_by_token(params['token'])
   if user
-    user_id = user['id']
+    user_id = user['user_id']
     messages = Message.where(user_id: user_id)
     { status: :ok, simple_messages: messages }.to_json
   else
@@ -40,7 +40,7 @@ end
 get '/api/v1/sources/:source_name/unread_messages' do
   user = get_user_by_token(params['token'])
   if user
-    user_id = user['id']
+    user_id = user['user_id']
     messages = Message.where(
         'user_id = :user_id and source = :source',
         user_id: user_id, source: params[:source_name])
@@ -52,11 +52,12 @@ end
 
 def add_message(message)
   # check allowed properties
-  properties = %w'title user_id source url'
+  required_properties = %w'title user_id source url'
+  optional_properties = %w'description'
   # reject all invalid parameters
-  message.reject! { |key, val| not properties.include? key }
+  message.reject! { |key, val| not (required_properties + optional_properties).include? key }
   # check all required parameters
-  properties.each { |x| er "missing property `#{x}'" unless message.key? x }
+  required_properties.each { |x| er "missing property `#{x}'" unless message.key? x }
 
   if (m = Message.create message)
     { message_id: m.id, status: :ok }.to_json
