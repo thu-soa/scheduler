@@ -12,6 +12,7 @@ after do
   ActiveRecord::Base.connection.close
 end
 
+
 # TODO Here we can use a cache to reduce requests
 def get_user_by_token(token)
   response = HTTP.get(URI("#{USER_INFO_URL}?token=#{token}"))
@@ -88,6 +89,26 @@ post '/api/v1/unread_messages', &(lambda do
   else
     er 'token error'
   end
+end)
+
+delete '/api/v1/unread_messages', &(lambda do
+  token = params['token']
+  id = params['id']
+  user = get_user_by_token(token)
+  begin
+    message = Message.find(id)
+  rescue ActiveRecord::RecordNotFound
+    er 'invalid message id'
+  end
+
+  if (token = params['token']) && user
+    if user.id == message.user_id
+      message.destroy
+    else
+      er 'not your message'
+    end
+  end
+  { status: :ok }.to_json
 end)
 
 get '/api/v1/all_sources' do
