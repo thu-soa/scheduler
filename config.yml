@@ -6,3 +6,4 @@ urls:
 adapter_urls:
   github:           http://localhost:8003
   vultr:            http://localhost:8004
+  learn:            http://localhost:8006 
