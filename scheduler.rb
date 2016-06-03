@@ -115,17 +115,17 @@ get '/api/v1/all_sources' do
   user = get_user_by_token(params['token'])
   if user
     user_id = user['user_id']
-    sites = []
+    sources = {}
     # each adapter, check registered
-    ADAPTER_URLS.each do |site, url_main|
+    ADAPTER_URLS.each do |source, url_main|
       u = url_main + "/api/v1/check_registered?id=#{user_id}&token=#{params['token']}"
       response = Net::HTTP.get(URI(u))
       json  = JSON.parse(response)
       if json['status'] == 'ok'
-        sites << site
+        sources[source] = url_main
       end
     end
-    { status: :ok, sites: sites }.to_json
+    { status: :ok, sources: sources }.to_json
   else
     er 'token error'
   end
